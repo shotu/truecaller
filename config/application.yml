@@ -1,0 +1,8 @@
+redis_host: "localhost"
+redis_port: "6379"
+redis_namespace: "dev"
+
+sidekiq_redis_namespace: "truecaller-sidekiq-dev"
+
+worker_redis_host: "localhost"
+worker_redis_namespace: "truecaller-scheduler-dev"

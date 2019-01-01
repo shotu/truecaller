@@ -6,7 +6,6 @@ module Api
           user = User.create!(email:"manish@cogoport", phone:"8884877977")
           render json: user
         end
-
       end
     end
   end

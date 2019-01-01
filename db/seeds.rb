@@ -5,3 +5,32 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+users_list = [
+    {
+      name: 'manish',
+      email:'atri.manish.iiita@gmail.com',
+      phone:'8884877977'
+    },
+    {
+      name: 'pradeep',
+      email:'pradeep@gmail.com',
+      phone:'94850134419'
+    },
+    {
+      name: 'arunava',
+      email:'bhattacharjee.arunava9@gmail.com',
+      phone:'94850134419'
+    }
+]
+users = User.create(users_list)
+
+users.each_with_index do |user, index|
+  puts "creating user::::#{index}"
+  5.times do
+    user_contact = UserContact.create({user_id: user.id, name: "rahul#{index}", email:"", phone: "8884877977"})
+    10.times do
+      history = UserContactCallHistory.create({ user_id: user.id, user_contact_id: user_contact.id, start_time: Time.zone.now + rand(0..9), end_time: Time.zone.now + rand(10..5000) })
+    end
+  end
+end

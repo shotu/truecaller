@@ -1,0 +1,5 @@
+send_call_stats_emails_worker:
+  cron: 0 * * * * Asia/Calcutta
+  class: CreateCallStatsEmailsJobsWorker
+  description: Run cron job every 1 hour
+  args:

@@ -10,22 +10,64 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190101083017) do
+ActiveRecord::Schema.define(version: 20190101151340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "user_contact_call_histories", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "user_id",                                           null: false
+    t.integer  "user_contact_id",                                   null: false
+    t.jsonb    "other_details",   default: []
+    t.string   "created_by",      default: "system@truecaller.com", null: false
+    t.string   "updated_by",      default: "system@truecaller.com", null: false
+    t.boolean  "is_active",       default: true
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.index ["created_at"], name: "index_user_contact_call_histories_on_created_at", using: :btree
+    t.index ["is_active"], name: "index_user_contact_call_histories_on_is_active", using: :btree
+  end
+
+  create_table "user_contacts", force: :cascade do |t|
+    t.integer  "user_id",                                         null: false
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.jsonb    "other_details", default: []
+    t.string   "created_by",    default: "system@truecaller.com", null: false
+    t.string   "updated_by",    default: "system@truecaller.com", null: false
+    t.boolean  "is_active",     default: true
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.index ["email"], name: "index_user_contacts_on_email", using: :btree
+    t.index ["is_active"], name: "index_user_contacts_on_is_active", using: :btree
+    t.index ["name"], name: "index_user_contacts_on_name", using: :btree
+    t.index ["phone"], name: "index_user_contacts_on_phone", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.string   "phone"
-    t.string   "created_by", default: "system@truecaller.com", null: false
-    t.string   "updated_by", default: "system@truecaller.com", null: false
-    t.string   "status"
-    t.boolean  "is_active",  default: true
+    t.jsonb    "other_details", default: []
+    t.string   "created_by",    default: "system@truecaller.com", null: false
+    t.string   "updated_by",    default: "system@truecaller.com", null: false
+    t.boolean  "is_active",     default: true
     t.datetime "deleted_at"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.index ["created_at"], name: "index_users_on_created_at", using: :btree
+    t.index ["email"], name: "index_users_on_email", using: :btree
+    t.index ["is_active"], name: "index_users_on_is_active", using: :btree
+    t.index ["name"], name: "index_users_on_name", using: :btree
+    t.index ["phone"], name: "index_users_on_phone", using: :btree
   end
 
+  add_foreign_key "user_contact_call_histories", "user_contacts"
+  add_foreign_key "user_contact_call_histories", "users"
+  add_foreign_key "user_contacts", "users"
 end
