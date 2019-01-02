@@ -5,24 +5,16 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version <br />
+ ruby 2.5 and above<br />
+ 
+ 
+* Rails version <br />
+   5.0.7<br />
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-rails db:migrate
-rails db:seed
-# truecaller
+* Database migration <br />
+  rails db:migrate<br />
+* Database seeding<br />
+  rails db:seed<br />
+* Runnung worker<br />
+  bundle exec sidekiq -C .config/sidekiq.yml
