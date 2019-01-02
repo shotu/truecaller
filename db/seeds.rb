@@ -30,7 +30,8 @@ users.each_with_index do |user, index|
   5.times do
     user_contact = UserContact.create({user_id: user.id, name: "rahul#{index}", email:"", phone: "8884877977"})
     10.times do
-      history = UserContactCallHistory.create({ user_id: user.id, user_contact_id: user_contact.id, start_time: Time.zone.now + rand(0..9), end_time: Time.zone.now + rand(10..5000) })
+      rand_days = rand(2..6)
+      UserContactCallHistory.create({ user_id: user.id, user_contact_id: user_contact.id, start_time: (Time.zone.now - rand_days.days), end_time: (Time.zone.now - rand_days.days) + rand(10..5000) })
     end
   end
 end

@@ -3,9 +3,11 @@ class CallStatsService
   def self.create_send_stats_email_jobs
     users = User.all.where(is_active: true)
     total_jobs = 0
+    # Here this job might fail, To handle this we have to make this job stateful by maintaining state of job in table
     users.each_with_index do |user, index|
       Rails.logger.info "Creating stats email job for user :#{user.email}"
       job_id = SendStatsEmailWorker.perform_async(user.id)
+
       if !job_id.nil?
         total_jobs = total_jobs + 1
         Rails.logger.info "Total jobs created::#{total_jobs}"
@@ -17,11 +19,11 @@ class CallStatsService
   end
 
   def self.send_stats_email(user_id)
-
     user = User.find(user_id)
     data = get_last_week_calls_stat_for_user(user_id)
 
     if data && data[:results].count > 0
+      byebug
       email_service_inst = EmailService.new("admin@truecaller.com", user.email, "Your calls stats this week", data)
       email_service_inst.send_email_message()
     end
@@ -32,7 +34,6 @@ class CallStatsService
   def self.get_last_week_calls_stat_for_user(user_id)
 
     # Here the date range is current date -1 day to previous 8days as we have send the stats till the end of day, current time can be any time of the day
-
     user_contacts_call_history_sql = "
           select
               user_contact_id,
