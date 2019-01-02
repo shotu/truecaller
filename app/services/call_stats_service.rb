@@ -30,7 +30,9 @@ class CallStatsService
   end
 
   def self.get_last_week_calls_stat_for_user(user_id)
-    days = 7 # Can be customized
+
+    # Here the date range is current date -1 day to previous 8days as we have send the stats till the end of day, current time can be any time of the day
+
     user_contacts_call_history_sql = "
           select
               user_contact_id,
@@ -40,8 +42,8 @@ class CallStatsService
           where
               user_id = #{user_id} and
               is_active = true and
-              start_time >= current_date -INTERVAL '#{days} DAY' and
-              end_time  <   current_date
+              start_time >= current_date - INTERVAL '8 DAY' and
+              end_time  <   current_date - INTERVAL '1'
           group by user_contact_id
           order by count, total_call_time"
     results = ActiveRecord::Base.connection.execute(user_contacts_call_history_sql)

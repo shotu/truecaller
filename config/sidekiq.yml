@@ -4,5 +4,5 @@ staging:
 production:
   :concurrency: 20
 :queues:
-  - default
+  - create_send_email_jobs
   - email

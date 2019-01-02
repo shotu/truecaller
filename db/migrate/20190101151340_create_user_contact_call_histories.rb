@@ -17,7 +17,10 @@ class CreateUserContactCallHistories < ActiveRecord::Migration[5.0]
 
       t.index :created_at
       t.index :is_active
-
+      t.index :user_contact_id
+      t.index :user_id
+      t.index :start_time
+      t.index :end_time
     end
     add_foreign_key :user_contact_call_histories, :users, column: :user_id
     add_foreign_key :user_contact_call_histories, :user_contacts, column: :user_contact_id
